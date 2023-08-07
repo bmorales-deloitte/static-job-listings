@@ -1,1 +1,26 @@
-@import '@exampledev/new.css';
+body{
+    background-color: hsl(180, 52%, 96%);
+    font-family: "League_Spartan", sans-serif !important;
+}
+.primary{
+    color: hsl(180, 29%, 50%);
+}
+.primary-bg{
+    background-color: hsl(180, 29%, 50%);
+}
+
+.light-grayish-cyan{
+    background-color: hsl(180, 31%, 95%)
+}
+.light-grayish-cyan-bg{
+    background-color: hsl(180, 52%, 96%)
+}
+.dark-grayish-cyan{
+    color: hsl(180, 8%, 52%)
+}
+.very-dark-grayish-cyan{
+    color: hsl(180, 14%, 20%)
+}
+.very-dark-grayish-cyan-bg{
+    background-color: hsl(180, 14%, 20%)
+}

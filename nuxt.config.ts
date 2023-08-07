@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 
   modules: [
     // pinia plugin
-    '@pinia/nuxt',
+    '@pinia/nuxt'
   ],
 
   imports: {
@@ -13,4 +13,11 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
+  vite: {
+    server: {
+        fs: {
+            allow: ["/Users/bmorales/Documents/workspace"]
+        }
+    }
+  }
 })
