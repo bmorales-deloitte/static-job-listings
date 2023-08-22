@@ -1,0 +1,102 @@
+type job = {
+    id?: number;
+    company?: string;
+    logo?: string;
+    new?: boolean;
+    featured?: boolean;
+    position?: string;
+    role?: string;
+    level?: string;
+    postedAt?: string;
+    contract?: string;
+    location?: string;
+    languages?: string[];
+    tools?: string[];
+
+}
+
+const jobs: job[] = [];
+
+type filter = {
+    type?: string;
+    nested?: boolean;
+    data?: string;
+}
+export const useJobsStore = defineStore('useJobsStore', {
+  state: () => ({
+    n: jobs,
+    filters: [] as filter[]
+  }),
+  getters: {
+    getJobs(state){
+        return state.n
+      }
+  },
+  actions: {
+        applyFilter(filter: { data?: string, type: string, nested: boolean}){
+
+            const result = this.filters.find((x: { data?: string, type?: string}, index) => {
+                return x.type === filter.type &&
+                x.data === filter.data
+            });
+
+            if(!result){
+                this.filters.push(filter);
+            }
+
+            // this.n = this.n.filter((job: any) => {
+            //     if(filter.nested === false){
+            //         return job[filter.type] === filter.data;
+            //     }else{
+            //         return job[filter.type].includes(filter.data);
+            //     }
+            // });
+            this.fetchJobs();
+        },
+        clearFilter(filter: {data?: string, type?: string}){
+            this.filters = this.filters.filter(( x:any, index ) => {
+                return x.data !== filter.data;
+            });
+
+            // this.n = jobs;
+
+            // if(this.filters.length > 0){
+
+            //     this.filters.forEach(( xFilter:any, index) => {
+            //         this.n = this.n.map((job: any) => {
+            //             if(xFilter.nested === false){
+            //                 if(job[xFilter.type] === xFilter.data){
+            //                     return job;
+            //                 }
+            //             }else{
+            //                 if(job[xFilter.type].includes(xFilter.data)){
+            //                     return job;
+            //                 }
+            //             }
+            //         }).filter((job)=> !!job);
+            //     });
+
+            // }
+            this.fetchJobs();
+
+        },
+        clearFilters() {
+            this.filters = [];
+            this.fetchJobs();
+        },
+        async fetchJobs() {
+            try {
+                const jobs = await $fetch('/api/jobs', { query: { filters: JSON.stringify(this.filters) } }).catch((error) => error.data);
+                this.n = jobs.data;
+              }
+            catch (error) {
+                alert(error)
+                console.log(error)
+            }
+        }
+  }
+})
+
+// if (import.meta.hot) {
+//   import.meta.hot.accept(acceptHMRUpdate(useJobsStore, import.meta.hot))
+// }

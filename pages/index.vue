@@ -1,8 +1,7 @@
 <template>
   <div class="min-h-screen light-grayish-cyan-bg">
-    <!-- <HighlightedText></HighlightedText> -->
     <div class="container mx-auto">
-      <div v-if="jobs.filters.length !== 0" class="filter-container bg-white flex mb-10 mt-20 pt-5 px-5 rounded-md shadow-lg justify-between">
+      <div v-if="jobs.filters.length !== 0" class="filter-container bg-white flex mx-5 mb-10 mt-20 pt-5 px-5 rounded-md shadow-lg justify-between">
         <div class="filter-buttons flex flex-wrap">
           <div v-for="filter in jobs.filters">
             <div class="primary light-grayish-cyan-bg rounded-sm flex font-bold mr-3 mb-5 text-sm" @click="jobs.clearFilter({type:filter.type, data: filter.data})">
@@ -15,7 +14,7 @@
       </div>
 
       <ul class="mx-5">
-          <li class="md:p-7 p-4 md:my-4 my-12 bg-white mb-3 mx-auto rounded-md shadow-lg" v-for="(job, index) in jobs.n">
+          <li class="md:p-7 p-4 md:my-4 my-12 bg-white mb-3 mx-auto rounded-md shadow-lg" v-for="(job, index) in getJobs">
               <div class="flex flex-wrap">
                   <div class="w-full md:w-1/6 flex items-center md:justify-center">
                       <img :src="job.logo"/>
@@ -51,7 +50,18 @@
 </template>
 
 <script setup lang="ts">
-  const jobs = useJobs();
+  import { useJobsStore } from '@/stores/jobs/index';
+  alert(useJobsStore)
+  const store = useJobsStore();
+  const getJobs = computed(() => {
+    return store.getJobs;
+  });
+  const jobs = computed(() => {
+    return store;
+  });
+  onMounted(() => {
+    store.fetchJobs();
+  });
 </script>
 
 <style scoped>
@@ -115,3 +125,4 @@
     }
 
 </style>
+test

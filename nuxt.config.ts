@@ -3,7 +3,8 @@ export default defineNuxtConfig({
 
   modules: [
     // pinia plugin
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@vee-validate/nuxt'
   ],
 
   imports: {
@@ -19,5 +20,11 @@ export default defineNuxtConfig({
             allow: ["/Users/bmorales/Documents/workspace"]
         }
     }
+  },
+  runtimeConfig: {
+    mongoUrl: process.env.MONGO_URL
+  },
+  nitro: {
+    plugins: ["~/server/index.ts"],
   }
-})
+});
