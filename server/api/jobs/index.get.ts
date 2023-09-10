@@ -3,10 +3,7 @@ import { job } from "../../dbModels";
 export default defineEventHandler(async (event) => {
   console.log("GET /api/jobs");
   const query  = getQuery(event);
-  const { filters } = query
-
-  console.log('++++++++++++++++++++')
-  console.log(JSON.parse(filters));
+  const { filters } = query;
 
   let formattedResult = {
     languages: [],
@@ -14,7 +11,8 @@ export default defineEventHandler(async (event) => {
     role: '',
     level: ''
   };
-  JSON.parse(filters).forEach(elem => {
+  
+  JSON.parse(filters).forEach(elem:any => {
     if(elem.type === 'languages'){
       formattedResult.languages.push(elem.data);
     }
@@ -45,10 +43,8 @@ export default defineEventHandler(async (event) => {
     }
   })
   const lol = Object.fromEntries(filteredResult);
-  console.log(lol);
 
   try {
-    console.log("Find jobs");
     const jobsData = await job.find(lol);
     return { data: jobsData };
   } catch (err) {
@@ -60,3 +56,7 @@ export default defineEventHandler(async (event) => {
     };
   }
 });
+
+function filters(filters: any) {
+  throw new Error("Function not implemented.");
+}

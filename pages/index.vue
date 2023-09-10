@@ -51,7 +51,6 @@
 
 <script setup lang="ts">
   import { useJobsStore } from '@/stores/jobs/index';
-  alert(useJobsStore)
   const store = useJobsStore();
   const getJobs = computed(() => {
     return store.getJobs;
@@ -125,4 +124,3 @@
     }
 
 </style>
-test

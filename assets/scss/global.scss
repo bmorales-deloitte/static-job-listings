@@ -1,0 +1,53 @@
+.k-border {
+    @include k-border;
+  }
+
+  .k-border-debug {
+    @include k-border-debug;
+    background-color: $dandy;
+  }
+
+
+body{
+    background-color: hsl(180, 52%, 96%);
+    font-family: "League_Spartan", sans-serif !important;
+}
+.primary{
+    color: $primaryColor;
+}
+.primary-bg{
+    background-color: $primaryColor;
+}
+
+.dark-grayish-cyan{
+    color: hsl(180, 8%, 52%)
+}
+
+.light-grayish-cyan{
+    background-color: $lightGrayishCyan;
+}
+.light-grayish-cyan-bg{
+    background-color: $lightGrayishCyan;
+}
+
+.very-dark-grayish-cyan{
+    color: $veryDarkGrayishCyan;
+}
+.very-dark-grayish-cyan-bg{
+    background-color: $veryDarkGrayishCyan;
+}
+
+
+.edit, .delete{
+    visibility: hidden;
+
+    &.edit{
+        margin-left: 0;
+    }
+}
+
+li:hover {
+    .edit, .delete{
+        visibility: visible;
+    }
+}

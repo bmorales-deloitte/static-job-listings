@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  css: ['~/assets/main.css'],
+  css: ["@/assets/scss/global.scss"],
 
   modules: [
     // pinia plugin
@@ -19,7 +19,14 @@ export default defineNuxtConfig({
         fs: {
             allow: ["/Users/bmorales/Documents/workspace"]
         }
-    }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "@/assets/scss/_vars.scss" as *;',
+        },
+      },
+    },
   },
   runtimeConfig: {
     mongoUrl: process.env.MONGO_URL

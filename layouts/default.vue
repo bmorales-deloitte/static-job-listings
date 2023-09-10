@@ -14,7 +14,7 @@
   </header>
 
   <template v-if="route.path !== '/'">
-    <router-link to="/">→ Back Home</router-link>
+    <!-- <router-link to="/">→ Back Home</router-link> -->
     <hr />
   </template>
 

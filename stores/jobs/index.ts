@@ -1,5 +1,7 @@
 import { job } from "server/dbModels";
 import Swal from 'sweetalert2';
+import moment from 'moment';
+import { boolean, object } from "yup";
 
 type job = {
     id?: number;
@@ -45,17 +47,21 @@ export const useJobsStore = defineStore('useJobsStore', {
         async register(values: object) {
             try {
                 console.log('calling new')
-                const job = await $fetch('/api/jobs', {
+                let jobResult: any;
+                jobResult = await $fetch('/api/jobs', {
                     method: 'POST',
                     body: JSON.stringify(values)
-                }).catch((error) => error.data);
+                }).catch((error) => {
+                    Swal.fire('Oops. Something went wrong. Please try again later.', '', 'info')
+                });
 
-                if(job.data && job.success){
+                if(jobResult && jobResult.data && jobResult.success){
+                    Swal.fire('Job Created!', '', 'success')
                     window.location.href = '/jobs';
                 }
             }
             catch (error) {
-                alert(error)
+                Swal.fire('Oops. Something went wrong. Please try again later.', '', 'info')
                 console.log(error)
             }
         },
@@ -63,17 +69,19 @@ export const useJobsStore = defineStore('useJobsStore', {
             try {
                 console.log('calling update')
                 const route = useRoute();
-                const job = await $fetch('/api/jobs/' + route.params.id, {
+                let jobResult: any;
+                jobResult = await $fetch('/api/jobs/' + route.params.id, {
                     method: 'POST',
                     body: JSON.stringify(values)
                 }).catch((error) => error.data);
 
-                if(job.data && job.success){
+                if(jobResult && jobResult.data && jobResult.success){
+                    Swal.fire('Job Updated!', '', 'success')
                     window.location.href = '/jobs';
                 }
             }
             catch (error) {
-                alert(error)
+                Swal.fire('Oops. Something went wrong. Please try again later.', '', 'info')
                 console.log(error)
             }
         },
@@ -87,11 +95,12 @@ export const useJobsStore = defineStore('useJobsStore', {
                 }).catch((error) => error.data);
 
                 if(job.data && job.success){
+                    Swal.fire('Job Deleted!', '', 'success')
                     window.location.href = '/jobs';
                 }
               }
             catch (error) {
-                alert(error)
+                Swal.fire('Oops. Something went wrong. Please try again later.', '', 'info')
                 console.log(error)
             }
         },
@@ -103,12 +112,10 @@ export const useJobsStore = defineStore('useJobsStore', {
                 confirmButtonText: 'Delete',
                 denyButtonText: `Cancel`,
               }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                   this.deleteJob(jobId);
-                  Swal.fire('Deleted!', '', 'success')
                 } else if (result.isDenied) {
-                  Swal.fire('Job is not deleted', '', 'info')
+                  Swal.fire('Job deletion cancelled', '', 'info')
                 }
               })
         },
@@ -155,10 +162,14 @@ export const useJobsStore = defineStore('useJobsStore', {
                 alert(error)
                 console.log(error)
             }
+        },
+        displayFormattedDate(date: string){
+            if (isNaN(Date.parse(date))){
+                return moment(new Date(), "YYYYMMDD").fromNow();;
+            }
+
+            return moment(new Date(date), "YYYYMMDD").fromNow();
+
         }
   }
-})
-
-// if (import.meta.hot) {
-//   import.meta.hot.accept(acceptHMRUpdate(useJobsStore, import.meta.hot))
-// }
+});

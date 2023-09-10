@@ -17,8 +17,10 @@
     "@pinia/nuxt": "^0.4.11",
     "@vee-validate/nuxt": "^4.11.1",
     "@vueuse/core": "^10.2.1",
+    "moment": "^2.29.4",
     "nuxt-sweetalert2": "^1.0.0",
     "pinia": "^2.1.4",
+    "sass": "^1.66.1",
     "sweetalert2": "^11.7.27",
     "yup": "^1.2.0"
   }
